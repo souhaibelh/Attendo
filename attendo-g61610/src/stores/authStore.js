@@ -23,17 +23,13 @@ export const useAuthStore = defineStore('auth', {
             supabase.auth.onAuthStateChange(async (event, session) => {
                 if (event === 'SIGNED_IN') {
                     const { data, error } = await supabase.auth.getUser()
-                    console.log(data.user)
                     if (error) {
                         console.error("Error signing in")
                     } else {
                         this.currentUser = data.user
                     }
                 } else if (event === 'SIGNED_OUT') {
-                    console.log("here")
                     this.currentUser = null
-                } else if (event === 'INITIAL_SESSION') {
-                    console.log(event)
                 }
             })
             const { data, error } = await supabase.auth.getUser()

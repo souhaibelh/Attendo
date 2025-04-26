@@ -1,5 +1,5 @@
 <script>
-import {useAuthStore} from './stores/authStore.js'
+import { useAuthStore } from './stores/authStore.js'
 import { mapStores } from 'pinia'
 
 export default {
@@ -29,7 +29,7 @@ export default {
 }
 
 .active-link {
-  @apply font-bold;
+  @apply underline;
 }
 </style>
 
@@ -38,7 +38,7 @@ export default {
   <header class="p-8 bg-black color text-white flex justify-center items-center text-4xl font-bold">
     Attendo
   </header>
-  <menu class="bg-amber-100 flex justify-between px-4 py-2 items-center">
+  <menu class="bg-amber-100 flex justify-between px-4 py-2 items-center border-b-2">
     <div class="flex items-center justify-center gap-2">
       <RouterLink :to="{ name: 'home' }" class="nav-link" active-class="active-link">Accueil</RouterLink> 
       <RouterLink :to="{ name: 'sessions' }" class="nav-link" active-class="active-link">Sessions</RouterLink>
