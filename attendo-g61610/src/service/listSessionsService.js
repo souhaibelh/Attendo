@@ -1,13 +1,21 @@
 import { supabase } from '../../lib/supabaseClient'
 
-function getAll() {
-    return supabase.from('session').select()
+export async function getAll() {
+    const { data, error } = await supabase.from('session').select();
+    if (error) {
+        console.error("Error fetching students:", error.message);
+        return [];
+    }
+    return data;
 }
 
-async function add(label) {
-    const { error } = await supabase.from('session').insert({label: label})
+export async function add(label) {
+    const { data, error } = await supabase.from('session').insert({ label });
 
     if (error) {
-        console.error('Error adding this session')
+        console.error('Error adding session:', error.message);
+        return;
     }
+
+    console.log('Session added successfully:', data);
 }

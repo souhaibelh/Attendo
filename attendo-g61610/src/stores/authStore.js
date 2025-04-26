@@ -19,26 +19,30 @@ export const useAuthStore = defineStore('auth', {
         async logout() {
             await supabase.auth.signOut()
         },
-        async init() {
-            supabase.auth.onAuthStateChange(async (event, session) => {
+        init() {
+            supabase.auth.onAuthStateChange((event, session) => {
                 if (event === 'SIGNED_IN') {
-                    const { data, error } = await supabase.auth.getUser()
-                    if (error) {
-                        console.error("Error signing in")
-                    } else {
-                        this.currentUser = data.user
-                    }
+                  supabase.auth.getUser()
+                    .then(({ data: {user} }) => {
+                      this.currentUser = user;
+                    })
+                    .catch((error) => {
+                      console.error("Error getting user data:", error.message);
+                    });
                 } else if (event === 'SIGNED_OUT') {
-                    this.currentUser = null
+                  console.log("signed out");
+                  this.currentUser = null;
                 }
-            })
-            const { data, error } = await supabase.auth.getUser()
-            if (data.user) {
-                this.currentUser = data.user
-            } else {
-                this.currentUser = null
-                this.isLoading = false
-            }
+            });
+
+            supabase.auth.getUser().then(({ data: { user }, error }) => {
+                if (user) {
+                    this.currentUser = user;
+                } else {
+                    this.currentUser = false;
+                }
+                this.isLoading = false;
+            });
         }
     }
 })

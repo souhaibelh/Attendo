@@ -6,7 +6,7 @@ export default {
   computed: {
     ...mapStores(useAuthStore)
   },
-  created() {
+  mounted() {
     this.authStore.init()
   }
 }
