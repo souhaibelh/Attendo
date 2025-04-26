@@ -55,13 +55,18 @@ export default {
         v-if="sessionUe.length > 0" 
         v-bind:headers="['UE']" 
         v-bind:attributes="['ue']" 
-        v-bind:routes="['session']" 
-        v-bind:linkedAttributes="['id']" 
+        v-bind:routes="[`/session/${id}/ue`]" 
+        v-bind:linkedAttributes="['ue']" 
         v-bind:items="sessionUe"/>
     <span v-else>Pas de ue dans cette session</span>
     <form v-on:submit.prevent="add">
         <label>Ajouter</label>
-        <SelectInput v-bind:options="uesFiltered" v-bind:option-text-label="'ue'" v-bind:option-value="'ue'" v-on:update:input="ue = $event"/>
+        <SelectInput 
+            v-bind:options="uesFiltered" 
+            v-bind:option-text-label="'ue'" 
+            v-bind:option-value="'ue'" 
+            v-on:update:input="ue = $event" 
+            v-bind:default-selection="'Choississez une UE'"/>
         <button type="submit">Ajouter</button>
     </form>
 </template>

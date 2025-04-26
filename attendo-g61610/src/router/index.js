@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
 import SessionsView from '../views/SessionsView.vue'
 import SessionView from '../components/SessionView.vue'
+import UeView from '@/components/UeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,7 +27,13 @@ const router = createRouter({
       path: '/session/:id',
       name: 'session',
       props: true,
-      component: SessionView
+      component: SessionView,
+    },
+    {
+      path: '/session/:sId/ue/:ue',
+      name: 'session_ue',
+      props: true,
+      component: UeView
     }
   ],
 })

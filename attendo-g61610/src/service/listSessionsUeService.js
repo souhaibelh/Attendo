@@ -20,3 +20,14 @@ export async function addUeToSession(ue, session) {
         console.log('Added successfully')
     }
 }
+
+export async function getId(ue, session) {
+    const {data, error} = await supabase.from('session_compo').select('id').eq('ue', ue).eq('session', session)
+
+    if (error) {
+        console.error("Error getting id" + error)
+        return '';
+    }
+
+    return data.at(0).id
+}
