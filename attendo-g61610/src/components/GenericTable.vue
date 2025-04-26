@@ -1,9 +1,16 @@
 <script>
 export default {
+    data() {
+        return {
+            baseOrigin: window.location.origin
+        }
+    },
     props: {
         headers: Array,
         items: Array,
         attributes: Array,
+        routes: Array,
+        linkedAttributes: Array
     }
 }
 </script>
@@ -15,7 +22,10 @@ export default {
         </thead>
         <tbody>
             <tr v-for="item in items">
-                <td v-for="attribute in attributes">{{ item[attribute] }}</td>
+                <td v-for="(attribute, index) in attributes">
+                    <RouterLink class="text-blue-700 hover:underline" v-if="routes[index]" :to="routes[index] + '/' + item[linkedAttributes[index]]">{{ item[attribute] }}</RouterLink>
+                    <span v-else>{{ item[attribute] }}</span>
+                </td>
             </tr>
         </tbody>
     </table>

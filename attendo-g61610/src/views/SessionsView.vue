@@ -28,7 +28,15 @@ export default {
 </script>
 
 <template>
-    <GenericTable v-bind:headers="['Sessions']" v-bind:attributes="['label']" v-bind:items="sessions"/>
+    Sessions
+    <GenericTable
+        v-if="sessions.length > 0" 
+        v-bind:headers="['Sessions']" 
+        v-bind:attributes="['label']" 
+        v-bind:routes="['session']" 
+        v-bind:linkedAttributes="['id']" 
+        v-bind:items="sessions"/>
+    <span v-else>Aucune session</span>
     <form v-on:submit.prevent="add">
         <label>Nouvelle session</label>
         <TextInput v-bind:placeholder="'juin'" v-bind:value="sessionLabel" v-on:update:input="sessionLabel = $event"/>

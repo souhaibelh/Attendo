@@ -1,6 +1,7 @@
 <script>
 import { useAuthStore } from './stores/authStore.js'
 import { mapStores } from 'pinia'
+import { get } from './service/listSessionsService.js'
 
 export default {
   computed: {
@@ -8,6 +9,7 @@ export default {
   },
   mounted() {
     this.authStore.init()
+    get(2)
   }
 }
 </script>
