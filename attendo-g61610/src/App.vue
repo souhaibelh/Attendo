@@ -1,8 +1,40 @@
 <script>
+import {useAuthStore} from './stores/authStore.js'
+import { mapStores } from 'pinia'
 
+export default {
+  computed: {
+    ...mapStores(useAuthStore)
+  },
+  created() {
+    this.authStore.init()
+  }
+}
 </script>
 
+<style scoped>
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+.nav-link {
+  @apply hover:text-zinc-400 transition-colors duration-200 ease-in-out;
+}
+
+.active-link {
+  @apply font-bold;
+}
+</style>
+
 <template>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
   <header class="p-8 bg-black color text-white flex justify-center items-center text-4xl font-bold">
     Attendo
   </header>
@@ -12,20 +44,12 @@
       <RouterLink :to="{ name: 'sessions' }" class="nav-link" active-class="active-link">Sessions</RouterLink>
       <RouterLink :to="{ name: 'about' }" class="nav-link" active-class="active-link">A propos</RouterLink>
     </div>
-    <button class="cursor-pointer border-2 border-black p-2 rounded-md hover:bg-black hover:text-white transition-colors duration-300 ease-in-out">
+    <button v-if="authStore.currentUser == null" v-on:click="authStore.login()" class="cursor-pointer border-2 border-black p-2 rounded-md hover:bg-black hover:text-white transition-colors duration-300 ease-in-out">
       Connexion avec Google
+    </button>
+    <button v-else v-on:click="authStore.logout()" class="flex justify-center items-center cursor-pointer transition-colors duration-200 ease-in-out hover:text-gray-400">
+      <span class="material-symbols-outlined">logout</span>
     </button>
   </menu>
   <router-view></router-view>
 </template>
-
-<style scoped>
-@import "tailwindcss";
-.nav-link {
-  @apply hover:text-zinc-400 transition-colors duration-200 ease-in-out;
-}
-
-.active-link {
-  @apply font-bold;
-}
-</style>
