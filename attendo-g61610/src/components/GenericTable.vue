@@ -4,6 +4,10 @@ export default {
         headers: Array,
         items: Array,
         attributes: Array,
+        pagination: {
+            type: Boolean,
+            default: false
+        },
         initialSortBy: {
             type: String,
             default: ''
@@ -12,7 +16,11 @@ export default {
             type: String,
             default: 'asc'
         },
-        highlightRowCondition: {
+        highlightedRowCondition: {
+            type: Function,
+            default: () => false
+        },
+        clickRowCallback: {
             type: Function,
             default: () => null
         }
@@ -41,11 +49,6 @@ export default {
                 return 0;
             });
         },
-        highlightedRows() {
-            return this.items.map(item => {
-                return this.highlightRowCondition ? this.highlightRowCondition(item) : false;
-            })
-        }
     },
     methods: {
         toggleSort(index) {
@@ -61,35 +64,50 @@ export default {
 </script>
 
 <template>
-    <table>
-        <thead>
-            <th v-for="(header, index) in headers" v-on:click="toggleSort(index)">
-                {{ header }} 
-                <span v-if="sortBy === attributes[index]">
-                    <span v-if="sortDirection === 'asc'">↑</span>
-                    <span v-if="sortDirection === 'desc'">↓</span>
-                </span>
-            </th>
-        </thead>
-        <tbody>
-            <tr v-for="(item, index) in sortedElements" v-on:click="$emit('row:click', item, index)" :class="highlightedRows[index] ? 'highlighted' : ''">
-                <td v-for="attribute in attributes">
-                    <slot name="cellSlot" :item="item" :attribute="attribute">
-                        <span>{{ item[attribute] }}</span>
-                    </slot>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-container">
+        <table>
+            <thead>
+                <th v-for="(header, index) in headers" v-on:click="toggleSort(index)">
+                    {{ header }} 
+                    <span v-if="sortBy === attributes[index]">
+                        <span v-if="sortDirection === 'asc'">↑</span>
+                        <span v-if="sortDirection === 'desc'">↓</span>
+                    </span>
+                </th>
+            </thead>
+            <tbody>
+                <tr v-for="item in sortedElements" v-on:click="clickRowCallback(item)" :class="{'highlighted' : highlightedRowCondition(item)}">
+                    <td v-for="attribute in attributes">
+                        <slot name="cellSlot" :item="item" :attribute="attribute">
+                            <span>{{ item[attribute] }}</span>
+                        </slot>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div v-if="pagination" class="pagination">
+            pagination
+        </div>
+    </div>
 </template>
 
 <style scoped>
 @import "tailwindcss";
-table {
+.table-container {
+    position: relative;
     margin: 10px auto 10px auto;
+    border: 1px solid black;
+    max-width: 50%;
+}
+.pagination {
+    position: absolute;
+    border: 1px solid red;
+    width: 100%;
+}
+table {
     border-spacing: unset;
-    min-width: 75%;
     box-shadow: 0px 2px 2px rgba(0,0,0,75%);
+    width: 100%;
 }
 thead {
     border-radius: 4px 4px 0px 0px;

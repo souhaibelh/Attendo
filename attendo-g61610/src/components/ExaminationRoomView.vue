@@ -21,20 +21,20 @@ export default {
     methods: {
         async fetchData() {
             this.students = (await getStudentsWithGroup(this.ue, this.exId)).map(s => {
-                const flattened = { ...s, group: s.pae?.[0]?.group, in_examination: s.examination?.length > 0 ? true : false};
+                const flattened = { ...s, group: s.pae?.[0]?.group, highlighted: s.examination?.length > 0 ? true : false};
                 delete flattened.pae;
                 delete flattened.examination
                 return flattened;
             });
         },
-        async handleStudentChange(item, index) {
+        async handleStudentChange(item) {
             const hasStudent = await has(item.student_id, this.exId)
             if (!hasStudent) {
                 await insert(item.student_id, this.exId)
-                this.students.at(index).in_examination = true;
+                item.highlighted = true;
             } else {
                 await remove(item.student_id, this.exId)
-                this.students.at(index).in_examination = false;
+                item.highlighted = false;
             }
         }
     },
@@ -52,8 +52,7 @@ export default {
         v-bind:items="students"
         v-bind:initial-sort-by="'student_id'"
         v-bind:initial-sort-direction="'asc'"
-        v-bind:highlight-row-condition="(data) => {
-            return data.in_examination
-        }"
-        v-on:row:click="handleStudentChange"/>
+        v-bind:pagination="true"
+        v-bind:highlighted-row-condition="(item) => item.highlighted"
+        v-bind:click-row-callback="(item) => handleStudentChange(item)"/>
 </template>
