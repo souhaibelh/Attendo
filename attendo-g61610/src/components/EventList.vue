@@ -16,7 +16,7 @@ export default {
 <template>
     <HorizontalFlexLayout>
         <Event v-for="event in events" v-bind:label="event[attribute]">
-            <slot :event="event"></slot>
+            <slot name="eventLink" :event="event"></slot>
         </Event>
     </HorizontalFlexLayout>
 </template>

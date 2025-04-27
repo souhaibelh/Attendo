@@ -55,9 +55,11 @@ export default {
         v-if="sessionUe.length > 0" 
         v-bind:headers="['UE']" 
         v-bind:attributes="['ue']" 
-        v-bind:routes="[`/session/${id}/ue`]" 
-        v-bind:linkedAttributes="['ue']" 
-        v-bind:items="sessionUe"/>
+        v-bind:items="sessionUe">
+        <template #cellSlot="{ item, attribute }">
+            <RouterLink :to="`/session/${id}/ue/${item['ue']}/`">{{ item['ue'] }}</RouterLink>
+        </template>
+    </GenericTable>
     <span v-else>Pas de ue dans cette session</span>
     <form v-on:submit.prevent="add">
         <label>Ajouter</label>

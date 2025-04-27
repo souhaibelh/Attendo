@@ -54,7 +54,7 @@ export default {
     <h1>Liste des locaux pour <span>{{ event.label }} - {{ ue }}</span></h1>
     <RoomList v-bind:rooms="eventRooms">
         <template v-slot="{ room }">
-            <RouterLink class="wrapper" :to="`examination/${room.examination_room.at(0).id}/`"/>
+            <RouterLink class="wrapper" :to="`/session/${sId}/ue/${ue}/event/${eId}/examination/${room.examination_room.at(0).id}/`"/>
         </template>
     </RoomList>
     <form v-on:submit.prevent="add">

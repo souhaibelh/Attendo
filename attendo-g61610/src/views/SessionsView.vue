@@ -35,7 +35,11 @@ export default {
         v-bind:attributes="['label']" 
         v-bind:routes="['session']" 
         v-bind:linkedAttributes="['id']" 
-        v-bind:items="sessions"/>
+        v-bind:items="sessions">
+        <template #cellSlot="{ item }">
+            <RouterLink class="text-blue-700 hover:underline" :to="`session/${item['id']}`">{{ item['label'] }}</RouterLink>
+        </template>
+    </GenericTable>
     <span v-else>Aucune session</span>
     <form v-on:submit.prevent="add">
         <label>Nouvelle session</label>
@@ -43,3 +47,7 @@ export default {
         <button type="submit">Ajouter</button>
     </form>
 </template>
+
+<style scoped>
+
+</style>
