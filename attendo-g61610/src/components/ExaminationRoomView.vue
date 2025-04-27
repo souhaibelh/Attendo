@@ -50,5 +50,10 @@ export default {
         v-bind:headers="['MATRICULE', 'GROUP', 'NOM', 'PRENOM']"
         v-bind:attributes="['student_id', 'group', 'lastname', 'firstname']"
         v-bind:items="students"
+        v-bind:initial-sort-by="'student_id'"
+        v-bind:initial-sort-direction="'asc'"
+        v-bind:highlight-row-condition="(data) => {
+            return data.in_examination
+        }"
         v-on:row:click="handleStudentChange"/>
 </template>
