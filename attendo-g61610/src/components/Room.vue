@@ -16,6 +16,7 @@ export default {
         </div>
         <h1>{{ label }}</h1>
         <p>{{ surveillant ? surveillant : defaultSupervisor }}</p>
+        <slot></slot>
     </div>
 </template>
 

@@ -5,6 +5,7 @@ import SessionsView from '../views/SessionsView.vue'
 import SessionView from '../components/SessionView.vue'
 import UeView from '@/components/UeView.vue'
 import EventView from '@/components/EventView.vue'
+import ExaminationRoomView from '@/components/ExaminationRoomView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -41,6 +42,12 @@ const router = createRouter({
       name: 'session_ue_event',
       props: true,
       component: EventView
+    },
+    {
+      path: '/session/:sId/ue/:ue/event/:eId/examination/:exId',
+      name: 's_u_e_examination',
+      props: true,
+      component: ExaminationRoomView
     }
   ],
 })

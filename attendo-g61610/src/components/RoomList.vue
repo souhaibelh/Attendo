@@ -19,6 +19,8 @@ export default {
             v-bind:default-supervisor="'Surveillant'" 
             v-bind:label="room.label" 
             v-bind:max-capacity="room.capacity" 
-            v-bind:surveillant="room.examination_room.at(0).supervisor"/>
+            v-bind:surveillant="room.examination_room.at(0).supervisor">
+            <slot :room="room"></slot>
+        </Room>
     </HorizontalFlexLayout>
 </template>

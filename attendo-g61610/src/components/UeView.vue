@@ -48,7 +48,7 @@ export default {
     <h1>Liste des epreuves de {{ ue }} (session: {{ session.label }})</h1>
     <EventList v-bind:events="events" v-bind:attribute="'label'">
         <template v-slot="{ event }">
-            <RouterLink class="wrapper" :to="`event/${event.id}`"/>
+            <RouterLink class="wrapper" :to="`event/${event.id}/`"/>
         </template>
     </EventList>
     <form v-on:submit.prevent="add()">

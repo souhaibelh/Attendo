@@ -9,7 +9,7 @@ export async function add(event, room) {
 }
 
 export async function getEventRooms(event) {
-    const {data, error} = await supabase.from('room').select('*, examination_room!inner(supervisor)').eq('examination_room.event', event)
+    const {data, error} = await supabase.from('room').select('*, examination_room!inner(supervisor, id)').eq('examination_room.event', event)
 
     if (error) {
         console.error("Error getting event", error.message, error.details)
