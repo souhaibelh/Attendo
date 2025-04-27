@@ -1,5 +1,6 @@
 <script>
 import Event from './Event.vue'
+import HorizontalFlexLayout from './HorizontalFlexLayout.vue';
 
 export default {
     props: {
@@ -7,21 +8,15 @@ export default {
         attribute: String
     },
     components: {
-        Event
+        Event, HorizontalFlexLayout
     }
 }
 </script>
 
 <template>
-    <div class="events-container">
-        <Event v-for="event in events" v-bind:label="event[attribute]"/>
-    </div>
+    <HorizontalFlexLayout>
+        <Event v-for="event in events" v-bind:label="event[attribute]">
+            <slot :event="event"></slot>
+        </Event>
+    </HorizontalFlexLayout>
 </template>
-
-<style scoped>
-.events-container {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-</style>

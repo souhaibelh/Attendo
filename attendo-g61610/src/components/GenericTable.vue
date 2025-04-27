@@ -23,7 +23,7 @@ export default {
         <tbody>
             <tr v-for="item in items">
                 <td v-for="(attribute, index) in attributes">
-                    <RouterLink class="text-blue-700 hover:underline" v-if="routes[index]" :to="routes[index] + '/' + item[linkedAttributes[index]]">{{ item[attribute] }}</RouterLink>
+                    <RouterLink class="text-blue-700 hover:underline" v-if="routes[index]" :to="routes[index] + '/' + item[linkedAttributes[index]] + '/'">{{ item[attribute] }}</RouterLink>
                     <span v-else>{{ item[attribute] }}</span>
                 </td>
             </tr>

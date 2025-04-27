@@ -9,6 +9,7 @@ export default {
 <template>
     <div class="event-container">
         <p>{{ label }}</p>
+        <slot></slot>
     </div>
 </template>
 
@@ -20,6 +21,7 @@ export default {
     box-shadow: 0px 2px 4px rgba(0,0,0,75%);
     box-sizing: border-box;
     border-radius: 12px;
+    position: relative;
 }
 
 .event-container > p {

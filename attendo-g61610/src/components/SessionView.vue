@@ -63,7 +63,7 @@ export default {
         <label>Ajouter</label>
         <SelectInput 
             v-bind:options="uesFiltered" 
-            v-bind:option-text-label="'ue'" 
+            v-bind:option-text-attribute="'ue'" 
             v-bind:option-value="'ue'" 
             v-on:update:input="ue = $event" 
             v-bind:default-selection="'Choississez une UE'"/>

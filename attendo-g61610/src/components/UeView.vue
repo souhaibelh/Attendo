@@ -25,8 +25,7 @@ export default {
         async fetchData() {
             const id = await getId(this.ue, this.sId)
             this.session_compo = id
-            const data = await getEvents(this.session_compo)
-            this.events = data
+            this.fetchEvents()
             const session = await get(this.sId)
             this.session = session
         },
@@ -47,10 +46,23 @@ export default {
 
 <template>
     <h1>Liste des epreuves de {{ ue }} (session: {{ session.label }})</h1>
-    <EventList v-bind:events="events" v-bind:attribute="'label'"/>
+    <EventList v-bind:events="events" v-bind:attribute="'label'">
+        <template v-slot="{ event }">
+            <RouterLink class="wrapper" :to="`event/${event.id}`"/>
+        </template>
+    </EventList>
     <form v-on:submit.prevent="add()">
         <label>Intitule:</label>
         <TextInput v-bind:placeholder="'bilan, projet, examen...'" v-bind:value="label" v-on:update:input="label = $event"/>
         <button type="submit">CREER</button>
     </form>
 </template>
+
+<style scoped>
+.wrapper {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+</style>

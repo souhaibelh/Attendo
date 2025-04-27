@@ -2,7 +2,7 @@
 export default {
     props: {
         options: Array,
-        optionTextLabel: String,
+        optionTextAttribute: String,
         optionValue: String,
         defaultSelection: String
     },
@@ -13,6 +13,6 @@ export default {
 <template>
     <select ref="select" v-on:input="$emit('update:input', $event.target.value)">
         <option v-if="defaultSelection" selected>{{ defaultSelection }}</option>
-        <option v-for="option in options" v-bind:value="option[optionValue]">{{ option[optionTextLabel] }}</option>
+        <option v-for="option in options" v-bind:value="option[optionValue]">{{ option[optionTextAttribute] }}</option>
     </select>
 </template>
