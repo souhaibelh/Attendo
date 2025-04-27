@@ -1,11 +1,12 @@
 <script>
 import GenericTable from './GenericTable.vue';
 import { getStudentsWithGroup } from '../service/listStudentPaeService'
+import { has, insert, remove } from '../service/listExaminationService'
 
 export default {
     data() {
         return {
-            students: []
+            students: [],
         }
     },
     props: {
@@ -19,12 +20,22 @@ export default {
     },
     methods: {
         async fetchData() {
-            this.students = (await getStudentsWithGroup(this.ue)).map(s => {
-                const flattened = { ...s, group: s.pae?.[0]?.group };
+            this.students = (await getStudentsWithGroup(this.ue, this.exId)).map(s => {
+                const flattened = { ...s, group: s.pae?.[0]?.group, in_examination: s.examination?.length > 0 ? true : false};
                 delete flattened.pae;
-                console.log(flattened)
+                delete flattened.examination
                 return flattened;
             });
+        },
+        async handleStudentChange(item, index) {
+            const hasStudent = await has(item.student_id, this.exId)
+            if (!hasStudent) {
+                await insert(item.student_id, this.exId)
+                this.students.at(index).in_examination = true;
+            } else {
+                await remove(item.student_id, this.exId)
+                this.students.at(index).in_examination = false;
+            }
         }
     },
     mounted() {
@@ -38,5 +49,6 @@ export default {
         v-if="students.length > 0"
         v-bind:headers="['MATRICULE', 'GROUP', 'NOM', 'PRENOM']"
         v-bind:attributes="['student_id', 'group', 'lastname', 'firstname']"
-        v-bind:items="students"/>
+        v-bind:items="students"
+        v-on:row:click="handleStudentChange"/>
 </template>

@@ -4,7 +4,8 @@ export default {
         headers: Array,
         items: Array,
         attributes: Array,
-    }
+    },
+    emits: ['row:click']
 }
 </script>
 
@@ -14,7 +15,7 @@ export default {
             <th v-for="header in headers">{{ header }}</th>
         </thead>
         <tbody>
-            <tr v-for="item in items">
+            <tr v-for="(item, index) in items" v-on:click="$emit('row:click', item, index)" v-bind:class="{ registered_student: item.in_examination }">
                 <td v-for="attribute in attributes">
                     <slot name="cellSlot" :item="item" :attribute="attribute">
                         <span>{{ item[attribute] }}</span>
@@ -50,5 +51,8 @@ tr {
 }
 tr:hover {
     background-color: #9F9FAA;
+}
+.registered_student {
+    background-color: pink;
 }
 </style>

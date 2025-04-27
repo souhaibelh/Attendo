@@ -57,7 +57,7 @@ export default {
         v-bind:attributes="['ue']" 
         v-bind:items="sessionUe">
         <template #cellSlot="{ item, attribute }">
-            <RouterLink :to="`/session/${id}/ue/${item['ue']}/`">{{ item['ue'] }}</RouterLink>
+            <RouterLink class="text-blue-700 hover:underline" :to="`/session/${id}/ue/${item['ue']}/`">{{ item['ue'] }}</RouterLink>
         </template>
     </GenericTable>
     <span v-else>Pas de ue dans cette session</span>
