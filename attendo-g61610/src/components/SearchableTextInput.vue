@@ -1,19 +1,13 @@
 <script>
-import TextInput from './TextInput.vue'
-
 export default {
     props: {
         value: String,
         items: Array,
         placeholder: String,
-        label: String,
         filterFunction: {
             type: Function,
-            default: () => null
-        }
-    },
-    components: {
-        TextInput
+            default: (items) => items
+        },
     },
     data() {
         return {
@@ -22,17 +16,19 @@ export default {
     },
     emits: ['data:submit', 'update:input'],
     methods: {
-        updateInput(value) {
-            this.$emit('update:input', value)
+        async updateInput(value) {
+            await this.$emit('update:input', value)
 
-            if (value.length === 0) {
-                this.displaySearch = false
-            } else {
-                this.displaySearch = true
-            }
+            this.toggleDisplaySearch()
+        },
+        toggleDisplaySearch() {
+            this.setDisplaySearch(this.value?.length > 0)
         },
         handleClickOutside() {
             this.displaySearch = false
+        },
+        setDisplaySearch(state) {
+            this.displaySearch = state
         }
     },
     computed: {
@@ -45,15 +41,15 @@ export default {
 
 <template>
     <div class="searchable-container" v-click-outside="handleClickOutside">
-        <label>{{ label }}</label>
         <div class="input-container">
             <input 
                 type="text"
                 v-bind:value="value"
                 v-bind:placeholder="placeholder"
-                v-on:input="updateInput($event.target.value)">
+                v-on:input="updateInput($event.target.value)"
+                v-on:click="toggleDisplaySearch">
             <ul v-if="displaySearch" class="results">
-                <slot v-for="item in filteredItems" name="resultSearch" :item="item"></slot>
+                <slot v-for="item in filteredItems" name="resultSearch" :item="item" :setDisplaySearch="setDisplaySearch"></slot>
             </ul>
         </div>
     </div>
@@ -93,7 +89,7 @@ input:focus {
     z-index: 20;
 }
 
-.searchable-container > input {
+.input-container > input {
     width: 100%;
 }
 </style>

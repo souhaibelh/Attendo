@@ -53,6 +53,11 @@ export default {
         async submitSurveillant() {
             await update(this.teacher, this.exId)
             this.currentTeacher = this.teacher
+        },
+        selectSupervisor(supervisor, callback) {
+            console.log(supervisor)
+            this.teacher = supervisor
+            callback()
         }
     },
     mounted() {
@@ -66,17 +71,18 @@ export default {
         Prise de presence du local <span v-if="room">asd</span> <span v-if="currentTeacher">par {{ currentTeacher }}</span>
     </h1>
     <div class="container">
+        <label for="teacher">Surveillant</label>
         <SearchableTextInput v-bind:label="'Surveillant'" v-bind:items="teachers" v-bind:value="teacher" v-on:update:input="teacher = $event" v-bind:placeholder="'Choississez un surveillant'"
             v-bind:filter-function="(items) => {
                 return items.filter((item) => {
-                    if (item['acro'] && item['acro'].includes(teacher)) {
+                    if (item['acro'] && item['acro'].toLowerCase().includes(teacher.toLowerCase())) {
                         return true;
                     }
                     return false;
                 });
             }">
-            <template #resultSearch="{ item }">
-                <li v-on:click="teacher = item.acro" class="result">{{ item.acro }}: {{ item.names }}</li>
+            <template #resultSearch="{ item, setDisplaySearch }">
+                <li tabindex="0" v-on:click="selectSupervisor(item.acro, () => setDisplaySearch(false))" class="result">{{ item.acro }}: {{ item.names }}</li>
             </template>
         </SearchableTextInput>
         <button v-on:click="submitSurveillant">Definir le surveillant</button>
