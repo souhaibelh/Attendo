@@ -72,7 +72,7 @@ export default {
     </h1>
     <div class="container">
         <label for="teacher">Surveillant</label>
-        <SearchableTextInput v-bind:label="'Surveillant'" v-bind:items="teachers" v-bind:value="teacher" v-on:update:input="teacher = $event" v-bind:placeholder="'Choississez un surveillant'"
+        <SearchableTextInput v-bind:items="teachers" v-bind:value="teacher" v-on:update:input="teacher = $event" v-bind:placeholder="'Choississez un surveillant'"
             v-bind:filter-function="(items) => {
                 return items.filter((item) => {
                     if (item['acro'] && item['acro'].toLowerCase().includes(teacher.toLowerCase())) {

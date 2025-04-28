@@ -16,13 +16,9 @@ export default {
     },
     emits: ['data:submit', 'update:input'],
     methods: {
-        async updateInput(value) {
-            await this.$emit('update:input', value)
-
-            this.toggleDisplaySearch()
-        },
-        toggleDisplaySearch() {
-            this.setDisplaySearch(this.value?.length > 0)
+        updateInput(value) {
+            this.$emit('update:input', value)
+            this.setDisplaySearch(value?.length > 0)
         },
         handleClickOutside() {
             this.displaySearch = false
