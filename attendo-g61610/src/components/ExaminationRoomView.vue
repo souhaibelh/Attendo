@@ -51,11 +51,10 @@ export default {
             }
         },
         async submitSurveillant() {
-            await update(this.teacher, this.exId)
-            this.currentTeacher = this.teacher
+            await update(this.teacher.toUpperCase(), this.exId)
+            this.currentTeacher = this.teacher.toUpperCase()
         },
         selectSupervisor(supervisor, callback) {
-            console.log(supervisor)
             this.teacher = supervisor
             callback()
         }

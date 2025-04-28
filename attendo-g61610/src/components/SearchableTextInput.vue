@@ -14,11 +14,14 @@ export default {
             displaySearch: false
         }
     },
-    emits: ['data:submit', 'update:input'],
+    emits: ['update:input'],
     methods: {
         updateInput(value) {
             this.$emit('update:input', value)
             this.setDisplaySearch(value?.length > 0)
+        },
+        toggleDisplaySearch() {
+            this.setDisplaySearch(this.value?.length > 0)
         },
         handleClickOutside() {
             this.displaySearch = false
