@@ -25,3 +25,21 @@ export async function remove(student, examination) {
         console.error("Problem removing record", error.message, error.details)
     }
 }
+
+export async function update(teacher, exId) {
+    const {data, error} = await supabase.from('examination_room').update({supervisor: teacher}).eq('id', exId)
+
+    if (error) {
+        console.error(error.message, error.details)
+    }
+}
+
+export async function get(id) {
+    const { data, error } = await supabase.from('examination_room').select('room, supervisor').eq('id', id)
+
+    if (error) {
+        console.error(error.message, error.details)
+    }
+    
+    return data
+} 

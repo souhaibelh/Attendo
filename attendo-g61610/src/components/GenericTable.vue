@@ -98,6 +98,7 @@ export default {
     margin: 10px auto 10px auto;
     border: 1px solid black;
     max-width: 50%;
+    z-index: 1;
 }
 .pagination {
     position: absolute;

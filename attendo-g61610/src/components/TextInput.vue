@@ -4,7 +4,7 @@ export default {
         placeholder: String,
         value: String
     },
-    emits: ['update:input']
+    emits: ['update:input'],
 }
 </script>
 
