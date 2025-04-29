@@ -23,7 +23,6 @@ export default {
     border-radius: 12px;
     position: relative;
 }
-
 .event-container > p {
     text-align: center;
     padding: 5px;

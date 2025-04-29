@@ -21,6 +21,11 @@ export async function getEventRooms(event) {
         })
     })
 
-    console.log(data)
+    const promises = data.map((item) => {
+        return supabase.from('examination').select('*', {count: 'exact'}).eq('examination_room', item.examination_room.at(0).id).then((response) => item.currentStudents = response.count)
+    })
+
+    await Promise.all(promises)
+
     return data
 }

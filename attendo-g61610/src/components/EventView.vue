@@ -19,7 +19,6 @@ export default {
             eventRooms: [],
             room: null,
             event: {},
-            isLoading: true
         }
     },
     methods: {
@@ -43,17 +42,15 @@ export default {
     components: {
         SelectInput, HorizontalFlexLayout, Room
     },
-    mounted() {
-        this.fetchData().then((data) => {
-            this.isLoading = false
-        })
+    async mounted() {
+        await this.fetchData()
     },
 }
 </script>
 
 <template>
     <h1>Liste des locaux pour <span>{{ event.label }} - {{ ue }}</span></h1>
-    <HorizontalFlexLayout v-if="!isLoading" v-bind:items="eventRooms"> 
+    <HorizontalFlexLayout v-bind:items="eventRooms"> 
         <template #flexChild="{ items }">
             <Room v-for="item in items" 
                 v-bind:current-students="item.currentStudents"

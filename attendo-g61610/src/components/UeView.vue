@@ -12,7 +12,7 @@ export default {
             label: '',
             session_compo: null,
             events: [],
-            session: {}
+            session: {},
         }
     },
     props: {
