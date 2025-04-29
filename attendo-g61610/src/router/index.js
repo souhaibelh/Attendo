@@ -23,30 +23,35 @@ const router = createRouter({
     {
       path: '/sessions',
       name: 'sessions',
+      meta: { requiresAuth: true },
       component: SessionsView,
     },
     {
       path: '/session/:id',
       name: 'session',
       props: true,
+      meta: { requiresAuth: true },
       component: SessionView,
     },
     {
       path: '/session/:sId/ue/:ue',
       name: 'session_ue',
       props: true,
+      meta: { requiresAuth: true },
       component: UeView
     },
     {
       path: '/session/:sId/ue/:ue/event/:eId',
       name: 'session_ue_event',
       props: true,
+      meta: { requiresAuth: true },
       component: EventView
     },
     {
       path: '/session/:sId/ue/:ue/event/:eId/examination/:exId',
       name: 's_u_e_examination',
       props: true,
+      meta: { requiresAuth: true },
       component: ExaminationRoomView
     }
   ],

@@ -17,11 +17,17 @@ const authStore = useAuthStore()
 app.use(router)
 app.directive('click-outside', clickOutside)
 
-router.beforeEach((to) => {
-    if (!authStore.currentUser && to.path.startsWith('/session')) {
-        return { name: 'home' }
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+      if (!authStore.currentUser) {
+        next({ name: 'home' });
+      } else {
+        next();
+      }
+    } else {
+      next();
     }
-})
+  });
 
 authStore.init(router)
 
