@@ -18,7 +18,8 @@ export default {
             v-for="room in rooms" 
             v-bind:default-supervisor="'Surveillant'" 
             v-bind:label="room.label" 
-            v-bind:max-capacity="room.capacity" 
+            v-bind:max-capacity="room.capacity"
+            v-bind:current-students="room.currentStudents"
             v-bind:surveillant="room.examination_room.at(0).supervisor">
             <slot :room="room"></slot>
         </Room>

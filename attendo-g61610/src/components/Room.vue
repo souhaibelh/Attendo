@@ -4,7 +4,11 @@ export default {
         label: String,
         maxCapacity: Number,
         surveillant: String,
-        defaultSupervisor: String
+        defaultSupervisor: String,
+        currentStudents: {
+            type: String,
+            default: '0'
+        }
     }
 }
 </script>
@@ -12,7 +16,7 @@ export default {
 <template>
     <div class="room-container">
         <div class="max-viewer">
-            0 / {{ maxCapacity }}
+            {{ currentStudents }} / {{ maxCapacity }}
         </div>
         <h1>{{ label }}</h1>
         <p>{{ surveillant ? surveillant : defaultSupervisor }}</p>

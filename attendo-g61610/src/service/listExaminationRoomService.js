@@ -14,6 +14,12 @@ export async function getEventRooms(event) {
     if (error) {
         console.error("Error getting event", error.message, error.details)
     }
+    
+    data.forEach((data) => {
+        supabase.from('examination').select('*', { count: 'exact' }).eq('examination_room', data.examination_room.at(0).id).then((response) => {
+            data.currentStudents = response.count
+        })
+    })
 
     return data
 }
