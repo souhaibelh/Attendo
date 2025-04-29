@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
 import { supabase } from '../../lib/supabaseClient'
+import { useRouter } from 'vue-router'
 
 export const useAuthStore = defineStore('auth', {
     state: () => {
         return {
             currentUser: null,
-            isLoading: true,
         }
     },
     actions: {
@@ -19,7 +19,7 @@ export const useAuthStore = defineStore('auth', {
         async logout() {
             await supabase.auth.signOut()
         },
-        init() {
+        init(router) {
             supabase.auth.onAuthStateChange((event, session) => {
                 if (event === 'SIGNED_IN') {
                   supabase.auth.getUser()
@@ -30,8 +30,11 @@ export const useAuthStore = defineStore('auth', {
                       console.error("Error getting user data:", error.message);
                     });
                 } else if (event === 'SIGNED_OUT') {
-                  console.log("signed out");
-                  this.currentUser = null;
+                    this.currentUser = null;
+
+                    if (router.currentRoute.value.path.startsWith('/session')) {
+                        router.push({name: 'home'})
+                    }
                 }
             });
 
@@ -41,7 +44,6 @@ export const useAuthStore = defineStore('auth', {
                 } else {
                     this.currentUser = false;
                 }
-                this.isLoading = false;
             });
         }
     }
