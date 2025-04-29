@@ -41,12 +41,7 @@ export const useAuthStore = defineStore('auth', {
                 }
             });
 
-            const user = this.getUser()
-            if (user) {
-                this.currentUser = user;
-            } else {
-                this.currentUser = false;
-            }
+            this.getUser()
         }
     }
 })
