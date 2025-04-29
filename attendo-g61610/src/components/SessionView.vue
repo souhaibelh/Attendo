@@ -52,11 +52,14 @@ export default {
 <template>
     <h1 v-if="session">Session {{ session.label }}</h1>
     <GenericTable
-        v-if="sessionUe.length > 0" 
-        v-bind:headers="['UE']" 
-        v-bind:attributes="['ue']" 
+        v-if="sessionUe.length > 0"
+        v-bind:columns="[
+            {label: 'UE', field: 'ue', sortable: true}
+        ]"
+        v-bind:initial-sort-by="'ue'"
+        v-bind:initial-sort-direction="'asc'"
         v-bind:items="sessionUe">
-        <template #cellSlot="{ item, attribute }">
+        <template #cellSlot="{ item }">
             <RouterLink class="text-blue-700 hover:underline" :to="`/session/${id}/ue/${item['ue']}/`">{{ item['ue'] }}</RouterLink>
         </template>
     </GenericTable>
