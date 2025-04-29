@@ -2,33 +2,13 @@
 export default {
     props: {
         label: String
-    }
+    },
 }
 </script>
 
 <template>
-    <div class="event-container">
-        <p>{{ label }}</p>
+    <div class="relative w-32 h-36 bg-gray-300 shadow-md rounded-lg hover:outline-2 hover:outline-black box-border">
+        <p class="text-center py-1">{{ label }}</p>
         <slot name="link"></slot>
     </div>
 </template>
-
-<style scoped>
-.event-container {
-    height: 150px;
-    width: 125px;
-    background-color: lightgray;
-    box-shadow: 0px 2px 4px rgba(0,0,0,75%);
-    box-sizing: border-box;
-    border-radius: 12px;
-    position: relative;
-}
-.event-container > p {
-    text-align: center;
-    padding: 5px;
-}
-
-.event-container:hover {
-    outline: 2px solid black;
-}
-</style>

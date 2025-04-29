@@ -47,7 +47,3 @@ export default {
         <button type="submit">Ajouter</button>
     </form>
 </template>
-
-<style scoped>
-
-</style>

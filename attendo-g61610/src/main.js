@@ -17,18 +17,19 @@ const authStore = useAuthStore()
 app.use(router)
 app.directive('click-outside', clickOutside)
 
-router.beforeEach((to, from, next) => {
+authStore.init(router)
+
+router.beforeEach(async (to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
-      if (!authStore.currentUser) {
-        next({ name: 'home' });
-      } else {
-        next();
-      }
+        const user = await authStore.getUser()
+        if (!user) {
+            next({ name: 'home' })
+        } else {
+            next();
+        }
     } else {
       next();
     }
   });
-
-authStore.init(router)
 
 app.mount('#app')

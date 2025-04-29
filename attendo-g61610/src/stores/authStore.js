@@ -19,6 +19,9 @@ export const useAuthStore = defineStore('auth', {
         async logout() {
             await supabase.auth.signOut()
         },
+        async getUser() {
+            return (await supabase.auth.getUser()).data.user
+        },
         init(router) {
             supabase.auth.onAuthStateChange((event, session) => {
                 if (event === 'SIGNED_IN') {
@@ -38,13 +41,12 @@ export const useAuthStore = defineStore('auth', {
                 }
             });
 
-            supabase.auth.getUser().then(({ data: { user }, error }) => {
-                if (user) {
-                    this.currentUser = user;
-                } else {
-                    this.currentUser = false;
-                }
-            });
+            const user = this.getUser()
+            if (user) {
+                this.currentUser = user;
+            } else {
+                this.currentUser = false;
+            }
         }
     }
 })
