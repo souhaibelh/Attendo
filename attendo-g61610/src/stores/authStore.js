@@ -41,7 +41,13 @@ export const useAuthStore = defineStore('auth', {
                 }
             });
 
-            this.getUser()
+            supabase.auth.getUser().then(({ data: { user }, error }) => {
+                if (user) {
+                    this.currentUser = user;
+                } else {
+                    this.currentUser = false;
+                }
+            });
         }
     }
 })
