@@ -14,6 +14,7 @@ export default {
             teacher: '',
             currentTeacher: null,
             room: null,
+            filterKey: ''
         }
     },
     props: {
@@ -88,14 +89,17 @@ export default {
     </div>
     <GenericTable
         v-if="students.length > 0"
-        v-bind:headers="['MATRICULE', 'GROUP', 'NOM', 'PRENOM']"
-        v-bind:attributes="['student_id', 'group', 'lastname', 'firstname']"
+        v-bind:columns="[
+            {label: 'MATRICULE', field: 'student_id', sortable: true},
+            {label: 'GROUP', field: 'group'},
+            {label: 'NOM', field: 'lastname', sortable: true},
+            {label: 'PRENOM', field: 'firstname', sortable: true}
+        ]"
         v-bind:items="students"
         v-bind:initial-sort-by="'student_id'"
         v-bind:initial-sort-direction="'asc'"
         v-bind:pagination="true"
-        v-bind:highlighted-row-condition="(item) => item.highlighted"
-        v-bind:click-row-callback="(item) => handleStudentChange(item)"/>
+        v-on:row:click="handleStudentChange"/>
 </template>
 
 <style scoped>

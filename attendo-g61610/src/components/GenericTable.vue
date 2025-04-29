@@ -1,9 +1,8 @@
 <script>
 export default {
     props: {
-        headers: Array,
         items: Array,
-        attributes: Array,
+        columns: Array,
         pagination: {
             type: Boolean,
             default: false
@@ -16,14 +15,6 @@ export default {
             type: String,
             default: 'asc'
         },
-        highlightedRowCondition: {
-            type: Function,
-            default: () => false
-        },
-        clickRowCallback: {
-            type: Function,
-            default: () => null
-        }
     },
     emits: ['row:click'],
     data() {
@@ -51,11 +42,12 @@ export default {
         },
     },
     methods: {
-        toggleSort(index) {
-            if (this.sortBy === this.attributes[index]) {
+        handleSort(column) {
+            if (!column.sortable) return 
+            if (this.sortBy === column.field) {
                 this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc'
             } else {
-                this.sortBy = this.attributes[index]
+                this.sortBy = column.field
                 this.sortDirection = 'asc'
             }
         }
@@ -67,19 +59,19 @@ export default {
     <div class="table-container">
         <table>
             <thead>
-                <th v-for="(header, index) in headers" v-on:click="toggleSort(index)">
-                    {{ header }} 
-                    <span v-if="sortBy === attributes[index]">
+                <th v-for="column in columns" v-on:click="handleSort(column)">
+                    {{ column.label }} 
+                    <span v-if="sortBy === column.field">
                         <span v-if="sortDirection === 'asc'">↑</span>
                         <span v-if="sortDirection === 'desc'">↓</span>
                     </span>
                 </th>
             </thead>
             <tbody>
-                <tr v-for="item in sortedElements" v-on:click="clickRowCallback(item)" :class="{'highlighted' : highlightedRowCondition(item)}">
-                    <td v-for="attribute in attributes">
-                        <slot name="cellSlot" :item="item" :attribute="attribute">
-                            <span>{{ item[attribute] }}</span>
+                <tr v-for="item in sortedElements" v-on:click="$emit('row:click', item)" :class="{'highlighted' : item.highlighted}">
+                    <td v-for="column in columns">
+                        <slot name="cellSlot" :item="item" :field="column.field">
+                            <span>{{ item[column.field] }}</span>
                         </slot>
                     </td>
                 </tr>
