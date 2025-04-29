@@ -6,8 +6,21 @@ export default {
         surveillant: String,
         defaultSupervisor: String,
         currentStudents: {
-            type: String,
-            default: '0'
+            type: Number,
+            default: 0
+        }
+    },
+    computed: {
+        space() {
+            const fillPercentage = ( this.currentStudents * 100 ) / this.maxCapacity
+
+            if (fillPercentage >= 100) {
+                return 'no-space'
+            } else if (fillPercentage >= 70) {
+                return 'low-space'
+            } else {
+                return ''
+            }
         }
     }
 }
@@ -15,12 +28,12 @@ export default {
 
 <template>
     <div class="room-container">
-        <div class="max-viewer">
+        <div class="max-viewer" v-bind:class="space">
             {{ currentStudents }} / {{ maxCapacity }}
         </div>
         <h1>{{ label }}</h1>
         <p>{{ surveillant ? surveillant : defaultSupervisor }}</p>
-        <slot></slot>
+        <slot name="link"></slot>
     </div>
 </template>
 
@@ -36,15 +49,21 @@ export default {
     outline: 2px solid black;
 }
 .max-viewer {
-    border: 1px solid #FEF4C6;
+    border: 3px solid black;
     width: max-content;
-    padding: 8px;
+    padding: 6px;
     border-radius: 16px;
     position: absolute;
     top: 0;
     right: 0;
     transform: translate(-6px, 6px);
     font-size: 12px;
+}
+.low-space {
+    background-color: gold;
+}
+.no-space {
+    background-color: red;
 }
 h1 {
     margin: unset;

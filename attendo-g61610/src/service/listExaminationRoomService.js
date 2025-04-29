@@ -21,5 +21,6 @@ export async function getEventRooms(event) {
         })
     })
 
+    console.log(data)
     return data
 }

@@ -4,7 +4,8 @@ import {getEventRooms, add as addExamination} from '../service/listExaminationRo
 import {getEvents} from '../service/listEventService.js'
 import {getId} from '../service/listSessionsUeService.js'
 import SelectInput from '../components/SelectInput.vue'
-import RoomList from '../components/RoomList.vue'
+import HorizontalFlexLayout from './HorizontalFlexLayout.vue'
+import Room from './Room.vue'
 
 export default {
     props: {
@@ -17,25 +18,20 @@ export default {
             rooms: [],
             eventRooms: [],
             room: null,
-            event: {}
+            event: {},
+            isLoading: true
         }
-    },
-    async mounted() {
-        this.fetchData()
-        this.event = await getEvents(await getId(this.ue, this.sId))
-        this.event = this.event.at(0)
     },
     methods: {
         async fetchData() {
-            this.rooms = await getAll()
-            this.fetchEventRooms()
-        },
-        async fetchEventRooms() {
             this.eventRooms = await getEventRooms(this.eId)
+            this.event = await getEvents(await getId(this.ue, this.sId))
+            this.event = this.event.at(0)
+            this.rooms = await getAll()
         },
         async add() {
             await addExamination(this.eId, this.room)
-            this.fetchEventRooms()
+            this.eventRooms = await getEventRooms(this.eId)
         },
     },
     computed: {
@@ -45,18 +41,31 @@ export default {
         }
     },
     components: {
-        SelectInput, RoomList
-    }
+        SelectInput, HorizontalFlexLayout, Room
+    },
+    mounted() {
+        this.fetchData().then((data) => {
+            this.isLoading = false
+        })
+    },
 }
 </script>
 
 <template>
     <h1>Liste des locaux pour <span>{{ event.label }} - {{ ue }}</span></h1>
-    <RoomList v-bind:rooms="eventRooms">
-        <template v-slot="{ room }">
-            <RouterLink class="wrapper" :to="`/session/${sId}/ue/${ue}/event/${eId}/examination/${room.examination_room.at(0).id}/`"/>
+    <HorizontalFlexLayout v-if="!isLoading" v-bind:items="eventRooms"> 
+        <template #flexChild="{ items }">
+            <Room v-for="item in items" 
+                v-bind:current-students="item.currentStudents"
+                v-bind:default-supervisor="'Surveillant'"
+                v-bind:max-capacity="item.capacity"
+                v-bind:label="item.label">
+                <template #link>
+                    <RouterLink class="wrapper" :to="`/session/${sId}/ue/${ue}/event/${eId}/examination/${item.examination_room.at(0).id}/`"/>
+                </template>
+            </Room>
         </template>
-    </RoomList>
+    </HorizontalFlexLayout>
     <form v-on:submit.prevent="add">
         <label>Local</label>
         <SelectInput 

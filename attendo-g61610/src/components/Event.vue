@@ -9,7 +9,7 @@ export default {
 <template>
     <div class="event-container">
         <p>{{ label }}</p>
-        <slot></slot>
+        <slot name="link"></slot>
     </div>
 </template>
 

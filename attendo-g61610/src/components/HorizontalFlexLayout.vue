@@ -1,11 +1,19 @@
+<script>
+export default {
+    props: {
+        items: Array
+    }
+}
+</script>
+
 <template>
-    <div class="events-container">
-        <slot></slot>
+    <div class="container">
+        <slot name="flexChild" :items="items"></slot>
     </div>
 </template>
 
 <style scoped>
-.events-container {
+.container {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
