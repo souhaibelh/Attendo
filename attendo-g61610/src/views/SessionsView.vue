@@ -31,10 +31,11 @@ export default {
     Sessions
     <GenericTable
         v-if="sessions.length > 0" 
-        v-bind:headers="['Sessions']" 
-        v-bind:attributes="['label']" 
-        v-bind:routes="['session']" 
-        v-bind:linkedAttributes="['id']" 
+        v-bind:columns="[
+            {label: 'Sessions', field: 'label', sortable: true}
+        ]"
+        v-bind:initial-sort-by="'label'"
+        v-bind:initial-sort-direction="'asc'"
         v-bind:items="sessions">
         <template #cellSlot="{ item }">
             <RouterLink class="text-blue-700 hover:underline" :to="`session/${item['id']}`">{{ item['label'] }}</RouterLink>

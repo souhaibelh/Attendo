@@ -1,12 +1,11 @@
 <script>
 import { mapStores } from 'pinia';
-import { useAuthStore } from '../stores/authStore.js';
+import { useAuthStore } from '@/stores/authStore';
 export default {
 computed: {
 ...mapStores(useAuthStore)
 }
 }
-
 </script>
 
 <template>
