@@ -30,7 +30,7 @@ export async function update(teacher, exId) {
     const {data, error} = await supabase.from('examination_room').update({supervisor: teacher}).eq('id', exId)
 
     if (error) {
-        console.error(error.message, error.details)
+        throw Error(error.message)
     }
 }
 

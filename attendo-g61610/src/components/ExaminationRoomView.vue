@@ -52,8 +52,12 @@ export default {
             }
         },
         async submitSurveillant() {
-            await update(this.teacher.toUpperCase(), this.exId)
-            this.currentTeacher = this.teacher.toUpperCase()
+            try {
+                await update(this.teacher.toUpperCase(), this.exId)
+                this.currentTeacher = this.teacher.toUpperCase()
+            } catch (error) {
+                console.log(error)
+            }
         },
         selectSupervisor(supervisor, callback) {
             this.teacher = supervisor
@@ -110,5 +114,5 @@ export default {
         v-bind:initial-sort-direction="'asc'"
         v-bind:pagination="true"
         v-on:row:click="handleStudentChange"/>
-    <span v-else>Loading data</span>    
+    <span class="m-[12px]" v-else>QUERYING DATABASE</span>    
 </template>
