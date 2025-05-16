@@ -14,44 +14,46 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+      meta: { breadcrumb: 'Home' }
     },
     {
       path: '/about',
       name: 'about',
       component: AboutView,
+      meta: { breadcrumb: 'About' }
     },
     {
       path: '/sessions',
       name: 'sessions',
-      meta: { requiresAuth: true },
+      meta: { requiresAuth: true, breadcrumb: 'Sessions' },
       component: SessionsView,
     },
     {
       path: '/session/:id',
       name: 'session',
       props: true,
-      meta: { requiresAuth: true },
+      meta: { requiresAuth: true, breadcrumb: 'Session' },
       component: SessionView,
     },
     {
       path: '/session/:sId/ue/:ue',
       name: 'session_ue',
       props: true,
-      meta: { requiresAuth: true },
+      meta: { requiresAuth: true, breadcrumb: 'UE' },
       component: UeView
     },
     {
       path: '/session/:sId/ue/:ue/event/:eId',
       name: 'session_ue_event',
       props: true,
-      meta: { requiresAuth: true },
+      meta: { requiresAuth: true, breadcrumb: 'Event' },
       component: EventView
     },
     {
       path: '/session/:sId/ue/:ue/event/:eId/examination/:exId',
       name: 's_u_e_examination',
       props: true,
-      meta: { requiresAuth: true },
+      meta: { requiresAuth: true, breadcrumb: 'Examination Room' },
       component: ExaminationRoomView
     }
   ],

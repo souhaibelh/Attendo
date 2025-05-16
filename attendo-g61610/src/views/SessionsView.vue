@@ -2,9 +2,10 @@
 import GenericTable from '../components/GenericTable.vue'
 import TextInput from '../components/TextInput.vue'
 import { getAll, add } from '../service/listSessionsService'
+import Breadcrumb from '@/components/Breadcrumb.vue'
 
 export default {
-    components: {GenericTable, TextInput},
+    components: {GenericTable, TextInput, Breadcrumb},
     data() {
         return {
             sessions: [],
@@ -28,6 +29,7 @@ export default {
 </script>
 
 <template>
+    <Breadcrumb/>
     <h1 class="m-[12px]">Sessions</h1>
     <GenericTable
         v-if="sessions.length > 0" 
