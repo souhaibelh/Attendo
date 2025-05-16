@@ -14,7 +14,7 @@ export async function insert(student, examination) {
     const { data, error } = await supabase.from('examination').insert({student: student, examination_room: examination})
 
     if (error) {
-        console.error("Error inserting row", error.message, error.details)
+        throw Error(error.message)
     }
 }
 
@@ -22,7 +22,7 @@ export async function remove(student, examination) {
     const { data, error } = await supabase.from('examination').delete().eq('student', student).eq('examination_room', examination)
 
     if (error) {
-        console.error("Problem removing record", error.message, error.details)
+        throw Error(error.message)
     }
 }
 
@@ -30,7 +30,7 @@ export async function update(teacher, exId) {
     const {data, error} = await supabase.from('examination_room').update({supervisor: teacher}).eq('id', exId)
 
     if (error) {
-        throw Error(error.message)
+        throw Error(error.details)
     }
 }
 
@@ -38,7 +38,7 @@ export async function get(id) {
     const { data, error } = await supabase.from('examination_room').select('room, supervisor').eq('id', id)
 
     if (error) {
-        console.error(error.message, error.details)
+        throw Error(error.message)
     }
     
     return data

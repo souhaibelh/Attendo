@@ -15,7 +15,8 @@ export default {
             teacher: '',
             currentTeacher: null,
             room: null,
-            filterKey: ''
+            filterKey: '',
+            errors: []
         }
     },
     props: {
@@ -28,6 +29,9 @@ export default {
         GenericTable, SearchableTextInput, Breadcrumb
     },
     methods: {
+        clearErrors() {
+            this.errors.length = 0
+        },
         async fetchData() {
             this.teachers = await getAll();
 
@@ -45,19 +49,30 @@ export default {
         async handleStudentChange(item) {
             const hasStudent = await has(item.student_id, this.exId)
             if (!hasStudent) {
-                await insert(item.student_id, this.exId)
-                item.highlighted = true;
+                try {
+                    await insert(item.student_id, this.exId)
+                    item.highlighted = true;
+                    this.clearErrors()
+                } catch (error) {
+                    this.errors.push(error)
+                }
             } else {
-                await remove(item.student_id, this.exId)
-                item.highlighted = false;
+                try {
+                    await remove(item.student_id, this.exId)
+                    item.highlighted = false;
+                    this.clearErrors()
+                } catch (error) {
+                    this.errors.push(error)
+                }
             }
         },
         async submitSurveillant() {
             try {
                 await update(this.teacher.toUpperCase(), this.exId)
                 this.currentTeacher = this.teacher.toUpperCase()
+                this.clearErrors()
             } catch (error) {
-                console.log(error)
+                this.errors.push(error)
             }
         },
         selectSupervisor(supervisor, callback) {
@@ -103,6 +118,11 @@ export default {
         </SearchableTextInput>
         <button class="border-[2px] border-gray-300 p-[4px] hover:border-black cursor-pointer" v-on:click="submitSurveillant">Definir le surveillant</button>
     </div>
+    <ol class="m-[12px] text-red-500" v-if="errors.length > 0">
+        <li v-for="error in errors">
+            {{ error }}
+        </li>
+    </ol>
     <GenericTable
         v-if="students.length > 0"
         v-bind:columns="[

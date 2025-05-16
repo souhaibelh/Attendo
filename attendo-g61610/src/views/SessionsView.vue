@@ -29,7 +29,7 @@ export default {
 </script>
 
 <template>
-    <Breadcrumb/>
+    <Breadcrumb class="m-[12px]"/>
     <h1 class="m-[12px]">Sessions</h1>
     <GenericTable
         v-if="sessions.length > 0" 
