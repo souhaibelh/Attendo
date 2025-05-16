@@ -4,6 +4,7 @@ import { getUeInSession, addUeToSession } from '../service/listSessionsUeService
 import { get as getSession } from '../service/listSessionsService'
 import GenericTable from '../components/GenericTable.vue'
 import SelectInput from '../components/SelectInput.vue'
+import Breadcrumb from './Breadcrumb.vue'
 
 export default {
     data() {
@@ -14,7 +15,7 @@ export default {
             ue: null
         }
     },
-    components: { GenericTable, SelectInput },
+    components: { GenericTable, SelectInput, Breadcrumb },
     props: {
         id: String
     },
@@ -50,6 +51,7 @@ export default {
 </script>
 
 <template>
+    <Breadcrumb class="m-[12px]"/>
     <h1 class="m-[12px]" v-if="session">
         Session 
         <span class="font-semibold">{{ session.label }}</span>

@@ -6,6 +6,7 @@ import {getId} from '../service/listSessionsUeService.js'
 import SelectInput from '../components/SelectInput.vue'
 import HorizontalFlexLayout from './HorizontalFlexLayout.vue'
 import Room from './Room.vue'
+import Breadcrumb from './Breadcrumb.vue'
 
 export default {
     props: {
@@ -40,7 +41,7 @@ export default {
         }
     },
     components: {
-        SelectInput, HorizontalFlexLayout, Room
+        SelectInput, HorizontalFlexLayout, Room, Breadcrumb
     },
     async mounted() {
         await this.fetchData()
@@ -49,6 +50,7 @@ export default {
 </script>
 
 <template>
+    <Breadcrumb class="m-[12px]"/>
     <h1 class="m-[12px]">
         Liste des locaux pour 
         <span class="font-semibold">

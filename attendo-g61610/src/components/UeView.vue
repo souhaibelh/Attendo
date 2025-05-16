@@ -5,6 +5,7 @@ import { add, getEvents } from '../service/listEventService'
 import TextInput from '../components/TextInput.vue'
 import HorizontalFlexLayout from './HorizontalFlexLayout.vue'
 import Event from './Event.vue'
+import Breadcrumb from './Breadcrumb.vue'
 
 export default {
     data() {
@@ -20,7 +21,7 @@ export default {
         ue: String,
     },
     components: {
-        TextInput, HorizontalFlexLayout, Event
+        TextInput, HorizontalFlexLayout, Event, Breadcrumb
     },
     methods: {
         async fetchData() {
@@ -46,6 +47,7 @@ export default {
 </script>
 
 <template>
+    <Breadcrumb class="m-[12px]"/>
     <h1 class="m-[12px]">
         Liste des epreuves de 
         <span class="font-semibold">{{ ue }}</span>

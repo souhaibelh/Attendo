@@ -4,6 +4,7 @@ import SearchableTextInput from './SearchableTextInput.vue';
 import { getStudentsWithGroup } from '../service/listStudentPaeService'
 import { has, insert, remove, update, get } from '../service/listExaminationService'
 import { getAll } from '../service/listTeacherService'
+import Breadcrumb from './Breadcrumb.vue';
 
 export default {
     data() {
@@ -24,7 +25,7 @@ export default {
         exId: String
     },
     components: {
-        GenericTable, SearchableTextInput
+        GenericTable, SearchableTextInput, Breadcrumb
     },
     methods: {
         async fetchData() {
@@ -71,6 +72,7 @@ export default {
 </script>
 
 <template>
+    <Breadcrumb class="m-[12px]"/>
     <h1 class="m-[12px]">
         Prise de presence du local 
         <span class="font-semibold" v-if="room">{{ room }}</span> 
