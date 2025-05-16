@@ -27,6 +27,8 @@ export default {
         sortedElements() {
             if (!this.sortBy) return this.items;
             const modifier = this.sortDirection === 'asc' ? 1 : -1;
+            // je sort une copie du vrai tableau comme ca on a toujours l'originel (utile dans le cadre ou on filtre aussi),
+            // si l'attribut est un string alors je localeCompare sinon je fais du sorting de nombres
             return [...this.items].sort((a, b) => {
                 const aVal = a[this.sortBy];
                 const bVal = b[this.sortBy];

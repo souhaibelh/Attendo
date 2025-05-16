@@ -8,6 +8,7 @@ export const useAuthStore = defineStore('auth', {
         }
     },
     actions: {
+        // methode pour log in
         async login() {
             const { error } = await supabase.auth.signInWithOAuth({provider: 'google',})
         
@@ -33,7 +34,7 @@ export const useAuthStore = defineStore('auth', {
                     });
                 } else if (event === 'SIGNED_OUT') {
                     this.currentUser = null;
-
+                    // si on a sign out et que la route demande cest la route protege /session/** alors on va dans le home
                     if (router.currentRoute.value.path.startsWith('/session')) {
                         router.push({name: 'home'})
                     }

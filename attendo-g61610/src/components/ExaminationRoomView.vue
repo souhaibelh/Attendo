@@ -41,6 +41,7 @@ export default {
             this.currentTeacher = examination_room.at(0).supervisor
 
             this.students = (await getStudentsWithGroup(this.ue, this.exId)).map(s => {
+                // flatten it to expose the group and highlighted to the first level
                 const flattened = { ...s, group: s.pae?.[0]?.group, highlighted: s.examination?.length > 0 ? true : false};
                 delete flattened.pae;
                 delete flattened.examination

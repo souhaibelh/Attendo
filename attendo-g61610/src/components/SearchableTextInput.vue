@@ -24,14 +24,17 @@ export default {
         toggleDisplaySearch() {
             this.setDisplaySearch(this.value?.length > 0)
         },
+        // fonction qui s'execute lorseque on click ailleurs, utilisation de la directive click-outside
         handleClickOutside() {
             this.displaySearch = false
         },
+        // fonction pour changer la visibilite des resultats de la recherche
         setDisplaySearch(state) {
             this.displaySearch = state
         }
     },
     computed: {
+        // je laisse le parent choisir comment filtrer les resultats, dans le cas ou il faut etre plus complexe que un simple contains
         filteredItems() {
             return this.filterFunction(this.items)
         }

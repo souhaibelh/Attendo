@@ -12,6 +12,7 @@ export default {
     },
     computed: {
         space() {
+            // return a color depending on how filled the room is 
             const fillPercentage = (this.currentStudents * 100) / this.maxCapacity;
 
             if (fillPercentage >= 95) {

@@ -27,6 +27,7 @@
       },
       elements() {
         let paths = this.generatePaths(this.$route.path)
+        // je regarde si les routes existent, si cest le cas je les mets dans l'array
         return paths.reduce((acc, path) => {
             const resolved = this.routeExists(path)
             if (resolved.matched.length > 0) {
@@ -37,11 +38,13 @@
       }
     },
     methods: {
+        // regarde si une route existe, desavantage cest que ca mets un warning dans la console
         routeExists(path) {
             const resolved = this.$router.resolve(path);
             return resolved
         },
 
+        // retoure un array avec les paths, si on recoit /session/23 il retourne ['/session', '/session/23']
         generatePaths(path) {
             const parts = path.replace(/^\/|\/$/g, '').split('/');
 
