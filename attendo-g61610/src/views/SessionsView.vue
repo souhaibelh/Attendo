@@ -28,7 +28,7 @@ export default {
 </script>
 
 <template>
-    Sessions
+    <h1 class="m-[12px]">Sessions</h1>
     <GenericTable
         v-if="sessions.length > 0" 
         v-bind:columns="[
@@ -41,10 +41,10 @@ export default {
             <RouterLink class="text-blue-700 hover:underline" :to="`session/${item['id']}`">{{ item['label'] }}</RouterLink>
         </template>
     </GenericTable>
-    <span v-else>Aucune session</span>
-    <form v-on:submit.prevent="add">
-        <label>Nouvelle session</label>
-        <TextInput v-bind:placeholder="'juin'" v-bind:value="sessionLabel" v-on:update:input="sessionLabel = $event"/>
-        <button type="submit">Ajouter</button>
+    <span class="m-[12px]" v-else>Aucune session</span>
+    <form class="flex m-[12px] justify-center items-center w-max gap-[4px]" v-on:submit.prevent="add">
+        <label for="session">Nouvelle session</label>
+        <TextInput id="session" class="border-[2px] border-gray-300 p-[4px]" v-bind:placeholder="'juin'" v-bind:value="sessionLabel" v-on:update:input="sessionLabel = $event"/>
+        <button class="border-[2px] border-gray-300 p-[4px] hover:border-black cursor-pointer" type="submit">Ajouter</button>
     </form>
 </template>

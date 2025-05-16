@@ -7,15 +7,7 @@ export default {
 </script>
 
 <template>
-    <div class="container">
+    <div class="flex gap-[10px] flex-wrap">
         <slot name="flexChild" :items="items"></slot>
     </div>
 </template>
-
-<style scoped>
-.container {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-</style>

@@ -4,6 +4,7 @@ export default {
         value: String,
         items: Array,
         placeholder: String,
+        inputId: String,
         filterFunction: {
             type: Function,
             default: (items) => items
@@ -39,56 +40,19 @@ export default {
 </script>
 
 <template>
-    <div class="searchable-container" v-click-outside="handleClickOutside">
-        <div class="input-container">
+    <div class="flex justify-center items-center w-max gap-[10px]" v-click-outside="handleClickOutside">
+        <div class="relative w-[200px]">
             <input 
+                v-bind:id="inputId"
+                class="border-[2px] border-gray-300 p-[4px] w-full"
                 type="text"
                 v-bind:value="value"
                 v-bind:placeholder="placeholder"
                 v-on:input="updateInput($event.target.value)"
                 v-on:click="toggleDisplaySearch">
-            <ul v-if="displaySearch" class="results">
+            <ul v-if="displaySearch" class="absolute w-full mt-1 border border-black rounded-md shadow-sm z-20">
                 <slot v-for="item in filteredItems" name="resultSearch" :item="item" :setDisplaySearch="setDisplaySearch"></slot>
             </ul>
         </div>
     </div>
 </template>
-
-<style scoped>
-.searchable-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: max-content;
-    gap: 10px;
-    margin: 10px;
-}
-
-.input-container {
-    position: relative;
-    width: 200px;
-}
-
-input {
-    border: 1px solid black;
-    padding: 4px;
-}
-
-input:focus {
-    outline: unset;
-}
-
-.results {
-    position: absolute;
-    width: 100%;
-    margin-top: 4px;
-    border: 1px solid black;
-    border-radius: 6px;
-    box-shadow: 0px 1px 2px rgba(0,0,0,75%);
-    z-index: 20;
-}
-
-.input-container > input {
-    width: 100%;
-}
-</style>

@@ -49,8 +49,13 @@ export default {
 </script>
 
 <template>
-    <h1>Liste des locaux pour <span>{{ event.label }} - {{ ue }}</span></h1>
-    <HorizontalFlexLayout v-bind:items="eventRooms"> 
+    <h1 class="m-[12px]">
+        Liste des locaux pour 
+        <span class="font-semibold">
+            {{ event.label }} - {{ ue }}
+        </span>
+    </h1>
+    <HorizontalFlexLayout class="m-[12px]" v-bind:items="eventRooms"> 
         <template #flexChild="{ items }">
             <Room v-for="item in items" 
                 v-bind:current-students="item.currentStudents"
@@ -58,32 +63,21 @@ export default {
                 v-bind:max-capacity="item.capacity"
                 v-bind:label="item.label">
                 <template #link>
-                    <RouterLink class="wrapper" :to="`/session/${sId}/ue/${ue}/event/${eId}/examination/${item.examination_room.at(0).id}/`"/>
+                    <RouterLink class="absolute w-full h-full top-0" :to="`/session/${sId}/ue/${ue}/event/${eId}/examination/${item.examination_room.at(0).id}/`"/>
                 </template>
             </Room>
         </template>
     </HorizontalFlexLayout>
-    <form v-on:submit.prevent="add">
-        <label>Local</label>
-        <SelectInput 
+    <form class="flex m-[12px] justify-center items-center w-max gap-[4px]" v-on:submit.prevent="add">
+        <label for="local">Local</label>
+        <SelectInput
+            id="local" 
+            class="border-[2px] border-gray-300 p-[4px]"
             v-bind:options="roomsFiltered" 
             v-bind:option-text-attribute="'label'" 
             v-bind:option-value="'label'" 
             v-on:update:input="room = $event" 
             v-bind:default-selection="'Choississez un local'"/>
-        <button type="submit">Ajouter</button>
+        <button class="border-[2px] border-gray-300 p-[4px] hover:border-black cursor-pointer" type="submit">Ajouter</button>
     </form>
 </template>
-
-<style scoped>
-h1 > span {
-    font-weight: 600;
-}
-
-.wrapper {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-}
-</style>

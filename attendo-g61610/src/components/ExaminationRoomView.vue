@@ -67,12 +67,18 @@ export default {
 </script>
 
 <template>
-    <h1>
-        Prise de presence du local <span v-if="room">asd</span> <span v-if="currentTeacher">par {{ currentTeacher }}</span>
+    <h1 class="m-[12px]">
+        Prise de presence du local 
+        <span class="font-semibold" v-if="room">{{ room }}</span> 
+        <span v-if="currentTeacher">
+            par 
+            <span class="font-semibold">{{ currentTeacher }}</span>
+        </span>
     </h1>
-    <div class="container">
-        <label for="teacher">Surveillant</label>
-        <SearchableTextInput 
+    <div class="m-[12px] flex justify-center items-center w-max gap-[4px]">
+        <label for="teacher">Surveillant:</label>
+        <SearchableTextInput
+            v-bind:input-id="'teacher'"
             v-bind:items="teachers" 
             v-bind:value="teacher" 
             v-on:update:input="teacher = $event" 
@@ -86,16 +92,16 @@ export default {
                 });
             }">
             <template #resultSearch="{ item, setDisplaySearch }">
-                <li tabindex="0" v-on:click="selectSupervisor(item.acro, () => setDisplaySearch(false))" class="result">{{ item.acro }}: {{ item.names }}</li>
+                <li tabindex="0" v-on:click="selectSupervisor(item.acro, () => setDisplaySearch(false))" class="p-1 cursor-pointer bg-white max-w-full hover:bg-gray-200">{{ item.acro }}: {{ item.names }}</li>
             </template>
         </SearchableTextInput>
-        <button v-on:click="submitSurveillant">Definir le surveillant</button>
+        <button class="border-[2px] border-gray-300 p-[4px] hover:border-black cursor-pointer" v-on:click="submitSurveillant">Definir le surveillant</button>
     </div>
     <GenericTable
         v-if="students.length > 0"
         v-bind:columns="[
             {label: 'MATRICULE', field: 'student_id', sortable: true},
-            {label: 'GROUP', field: 'group'},
+            {label: 'GROUP', field: 'group', sortable: true},
             {label: 'NOM', field: 'lastname', sortable: true},
             {label: 'PRENOM', field: 'firstname', sortable: true}
         ]"
@@ -104,34 +110,5 @@ export default {
         v-bind:initial-sort-direction="'asc'"
         v-bind:pagination="true"
         v-on:row:click="handleStudentChange"/>
+    <span v-else>Loading data</span>    
 </template>
-
-<style scoped>
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: max-content;
-}
-
-.result {
-    padding: 4px;
-    cursor: pointer;
-    background-color: white;
-    max-width: 100%;
-}
-
-.result:hover {
-    background-color: lightgray;
-}
-
-button {
-    border: 1px solid black;
-    padding: 4px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: lightgray;
-}
-</style>
