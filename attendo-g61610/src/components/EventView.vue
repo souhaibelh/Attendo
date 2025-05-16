@@ -62,6 +62,7 @@ export default {
             <Room v-for="item in items" 
                 v-bind:current-students="item.currentStudents"
                 v-bind:default-supervisor="'Surveillant'"
+                v-bind:surveillant="item.examination_room[0].supervisor"
                 v-bind:max-capacity="item.capacity"
                 v-bind:label="item.label">
                 <template #link>
