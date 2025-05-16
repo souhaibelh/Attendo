@@ -5,6 +5,7 @@ import { get as getSession } from '../service/listSessionsService'
 import GenericTable from '../components/GenericTable.vue'
 import SelectInput from '../components/SelectInput.vue'
 import Breadcrumb from './Breadcrumb.vue'
+import ErrorList from './ErrorList.vue'
 
 export default {
     data() {
@@ -12,10 +13,11 @@ export default {
             session: null,
             sessionUe: [],
             ues: [],
-            ue: null
+            ue: null,
+            errors: []
         }
     },
-    components: { GenericTable, SelectInput, Breadcrumb },
+    components: { GenericTable, SelectInput, Breadcrumb, ErrorList },
     props: {
         id: String
     },
@@ -26,8 +28,13 @@ export default {
             })
         },
         async add() {
-            await addUeToSession(this.ue, this.session.id)
-            this.fetchData()
+            this.errors.length = 0
+            try {
+                await addUeToSession(this.ue, this.session.id)
+                this.fetchData()
+            } catch (error) {
+                this.errors.push(error)
+            }
         }
     },
     computed: {
@@ -69,6 +76,7 @@ export default {
         </template>
     </GenericTable>
     <span class="m-[12px]" v-else>Pas de ue dans cette session</span>
+    <ErrorList class="m-[12px]" v-bind:errors="errors" />
     <form class="flex m-[12px] justify-center items-center w-max gap-[4px]" v-on:submit.prevent="add">
         <label for="ue">Ajouter UE</label>
         <SelectInput

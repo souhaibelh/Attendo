@@ -5,6 +5,7 @@ import { getStudentsWithGroup } from '../service/listStudentPaeService'
 import { has, insert, remove, update, get } from '../service/listExaminationService'
 import { getAll } from '../service/listTeacherService'
 import Breadcrumb from './Breadcrumb.vue';
+import ErrorList from './ErrorList.vue';
 
 export default {
     data() {
@@ -26,7 +27,7 @@ export default {
         exId: String
     },
     components: {
-        GenericTable, SearchableTextInput, Breadcrumb
+        GenericTable, SearchableTextInput, Breadcrumb, ErrorList
     },
     methods: {
         clearErrors() {
@@ -47,12 +48,12 @@ export default {
             });
         },
         async handleStudentChange(item) {
+            this.clearErrors()
             const hasStudent = await has(item.student_id, this.exId)
             if (!hasStudent) {
                 try {
                     await insert(item.student_id, this.exId)
                     item.highlighted = true;
-                    this.clearErrors()
                 } catch (error) {
                     this.errors.push(error)
                 }
@@ -60,17 +61,16 @@ export default {
                 try {
                     await remove(item.student_id, this.exId)
                     item.highlighted = false;
-                    this.clearErrors()
                 } catch (error) {
                     this.errors.push(error)
                 }
             }
         },
         async submitSurveillant() {
+            this.clearErrors()
             try {
                 await update(this.teacher.toUpperCase(), this.exId)
                 this.currentTeacher = this.teacher.toUpperCase()
-                this.clearErrors()
             } catch (error) {
                 this.errors.push(error)
             }
@@ -118,11 +118,7 @@ export default {
         </SearchableTextInput>
         <button class="border-[2px] border-gray-300 p-[4px] hover:border-black cursor-pointer" v-on:click="submitSurveillant">Definir le surveillant</button>
     </div>
-    <ol class="m-[12px] text-red-500" v-if="errors.length > 0">
-        <li v-for="error in errors">
-            {{ error }}
-        </li>
-    </ol>
+    <ErrorList class="m-[12px]" v-bind:errors="errors"/>
     <GenericTable
         v-if="students.length > 0"
         v-bind:columns="[

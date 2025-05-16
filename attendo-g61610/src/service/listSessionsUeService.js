@@ -15,9 +15,7 @@ export async function addUeToSession(ue, session) {
     const {data, error} = await supabase.from('session_compo').insert({ ue: ue, session: session });
 
     if (error) {
-        console.error('Error adding ue to session' + error)
-    } else {
-        console.log('Added successfully')
+        throw Error(error.message)
     }
 }
 

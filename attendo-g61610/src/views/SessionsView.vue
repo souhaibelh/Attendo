@@ -3,13 +3,15 @@ import GenericTable from '../components/GenericTable.vue'
 import TextInput from '../components/TextInput.vue'
 import { getAll, add } from '../service/listSessionsService'
 import Breadcrumb from '@/components/Breadcrumb.vue'
+import ErrorList from '@/components/ErrorList.vue'
 
 export default {
-    components: {GenericTable, TextInput, Breadcrumb},
+    components: {GenericTable, TextInput, Breadcrumb, ErrorList},
     data() {
         return {
             sessions: [],
-            sessionLabel: ''
+            sessionLabel: '',
+            errors: []
         }
     },
     methods: {
@@ -18,8 +20,13 @@ export default {
             this.sessions = data
         },
         async add() {
-            await add(this.sessionLabel)
-            this.fetchData()
+            this.errors.length = 0
+            if (this.sessionLabel.length === 0) {
+                this.errors.push("Session cannot be empty")
+            } else {
+                await add(this.sessionLabel)
+                this.fetchData()
+            }
         }
     },
     mounted() {
@@ -44,6 +51,7 @@ export default {
         </template>
     </GenericTable>
     <span class="m-[12px]" v-else>Aucune session</span>
+    <ErrorList class="m-[12px]" v-bind:errors="errors"/>
     <form class="flex m-[12px] justify-center items-center w-max gap-[4px]" v-on:submit.prevent="add">
         <label for="session">Nouvelle session</label>
         <TextInput id="session" class="border-[2px] border-gray-300 p-[4px]" v-bind:placeholder="'juin'" v-bind:value="sessionLabel" v-on:update:input="sessionLabel = $event"/>
