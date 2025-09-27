@@ -124,7 +124,7 @@ Make sure you have the following installed on your system:
 - Update lists dynamically without leaving the exam page.  
 
 <p align="center">
-  <img src="assets/students-screenshot.png"/><br/>
+  <img src="assets/student-screenshot.png"/><br/>
 </p>
 <p align="center">
   <em>Student table with non-enrolled students in white and enrolled students highlighted in pink</em>
