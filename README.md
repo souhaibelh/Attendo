@@ -69,7 +69,7 @@ Make sure you have the following installed on your system:
 - Navigate to [http://localhost:5173/](http://localhost:5173/)
 
 ### Usage / Examples
-- When you open the app, you will see a header with **three tabs**, Accueil, Sessions, A propos, the only ones accessible without logging in are Accueil and Sessions, there is also a button on the right side of the header allowing to log out, log in using google OAuth.
+- When you open the app, you will see a header with **three tabs**, Accueil, Sessions, A propos, the only ones accessible without logging in are Accueil and Sessions, there is also a button on the right side of the header allowing to Log out, **Log in using Google OAuth**.
 
 #### Sessions & UEs
 - In the sessions header tab, you can create new **exam sessions** (e.g., *September*, *August*).  
