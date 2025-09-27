@@ -15,7 +15,7 @@ Attendo, a web app for managing exam sessions, UEs, exams, rooms with capacities
   - [Student Management](#student-management)
 
 ## About
-Attendo is a web application for managing exam sessions. Teachers can create sessions (e.g., September, August), add teaching units (UEs) and exams, assign rooms with capacity limits, designate supervisors, and manage student enrollment through an interactive interface.
+Attendo is a web app to manage exam sessions, teaching units (UEs), exams, rooms, supervisors, and student enrollment through an interactive interface.
 
 ## Screenshot
 <p align="center">
